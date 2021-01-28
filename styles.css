@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+/* Document Settings */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-family: "Arial", "Helvetica", sans-serif;
+}
+body {
+  background-color: #ffffff;
+  min-height: 180px;
+  width: 384px;
+  padding: 16px;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+textarea,
+input,
+button,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+h1 {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 400;
+  color: #3c4146;
+}
+p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 23px;
+  color: #242729;
+}
+.details {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  margin-right: 16px;
+  vertical-align: baseline;
+  color: #242729;
+}
+.details-description {
+  color: #3c4146;
+}
+
+/* Header */
+.header {
+  align-items: center;
+}
+.logo {
+  margin-bottom: 8px;
+}
+.header-content {
+  display: flex;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e4e6e8;
+  margin-bottom: 16px;
+}
+.logo-icon {
+  width: 28px;
+  vertical-align: text-bottom;
+  margin-right: 12px;
+}
+
+/* Visuals */
+.visuals {
+}
+
+/* Icons */
+.icons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 22px;
+
+  border-top: 0.5px solid #dadada;
+  height: 50px;
+  width: 100%;
+}
+
+.icon-div {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+  width: 120px;
+}
+
+.icon-div:hover {
+  opacity: 0.4;
+}
+
+.icon-div .fa {
+  font-size: 32px;
+  color: #2f5876;
+}
