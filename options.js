@@ -3,6 +3,7 @@ document.getElementById("save").addEventListener("click", save);
 document.getElementById("reset").addEventListener("click", reset);
 
 function save() {
+  // Save settings to chrome storage
   const sites = document.getElementById("sites").value;
   const countDaily = document.getElementById("daily").checked;
   chrome.storage.sync.set(
@@ -15,7 +16,7 @@ function save() {
 }
 
 function load() {
-  // Load settings and display
+  // Load settings from chrome storage and display
   chrome.storage.sync.get(
     { sites: "https://stackoverflow.com/", countDaily: false },
     (items) => {
@@ -26,7 +27,7 @@ function load() {
 }
 
 function reset() {
-  // Clear storage and show defaults to user
+  // Clear chrome storage and show defaults to user
   chrome.storage.sync.clear(() => displayStatus("Preferences reset."));
   document.getElementById("sites").value = "https://stackoverflow.com/";
   document.getElementById("daily").checked = false;
