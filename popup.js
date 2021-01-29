@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", buildFromSettings);
 
-const NUMBER_DAYS_SHOWN = calcNumberDaysToShow();
+const NUMBER_MONTHS_SHOWN = 9;
+const NUMBER_DAYS_SHOWN = calcNumberDaysToShow(NUMBER_MONTHS_SHOWN);
 const MONTHS_SHORT = [
   "Jan",
   "Feb",
@@ -139,10 +140,10 @@ function buildGridSquaresDom(urlTimeSummary) {
 }
 
 function buildGridMonthDom() {
-  const start = 1 + new Date().getMonth();
+  const start = 13 - NUMBER_MONTHS_SHOWN + new Date().getMonth();
   let styling = "";
 
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < NUMBER_MONTHS_SHOWN; i++) {
     const index = start + i >= 12 ? start + i - 12 : start + i;
     styling += `calc(var(--week-width) * ${MONTHS_WEEKS_WIDTH[index]}) `;
 
@@ -221,6 +222,17 @@ function calcSquareLevel(views, percentiles) {
 
   return dataLevel;
 }
-function calcNumberDaysToShow() {
-  return 365 + new Date().getDay();
+function calcNumberDaysToShow(numberMonths) {
+  // return days in specified numberMonths - correction to current day of week
+  const currentDate = new Date();
+
+  const dateObj = new Date();
+  dateObj.setMonth(dateObj.getMonth() - numberMonths);
+
+  const diff = currentDate - dateObj;
+  let daysDiff = Math.floor(diff / (1000 * 60 * 60 * 24));
+  daysDiff -= daysDiff % 7; // make multiple of 7
+  daysDiff -= 6 - currentDate.getDay(); // minus to current day
+
+  return daysDiff;
 }

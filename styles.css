@@ -20,8 +20,8 @@ html {
 body {
   background-color: #ffffff;
   min-height: 180px;
-  width: 1200px;
-  /* width: 384px; */
+  width: auto;
+  min-width: 384px;
   padding: 16px;
 }
 html::-webkit-scrollbar {
