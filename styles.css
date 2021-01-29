@@ -7,13 +7,21 @@
   margin: 0;
   box-sizing: border-box;
 }
+:root {
+  --font-color-dark: #242729;
+  --font-color-light: #3c4146;
+  --square-size: 10px;
+  --square-gap: 3px;
+  --week-width: calc(var(--square-size) + var(--square-gap));
+}
 html {
   font-family: "Arial", "Helvetica", sans-serif;
 }
 body {
   background-color: #ffffff;
   min-height: 180px;
-  width: 384px;
+  width: 1200px;
+  /* width: 384px; */
   padding: 16px;
 }
 html::-webkit-scrollbar {
@@ -30,13 +38,16 @@ h1 {
   font-size: 22px;
   line-height: 30px;
   font-weight: 400;
-  color: #3c4146;
+  color: var(--font-color-light);
 }
 p {
   font-size: 14px;
   font-weight: 400;
   line-height: 23px;
-  color: #242729;
+  color: var(--font-color-dark);
+}
+ul li {
+  list-style: none;
 }
 .details {
   font-size: 12px;
@@ -44,10 +55,10 @@ p {
   line-height: 17px;
   margin-right: 16px;
   vertical-align: baseline;
-  color: #242729;
+  color: var(--font-color-dark);
 }
 .details-description {
-  color: #3c4146;
+  color: var(--font-color-light);
 }
 
 /* Header */
@@ -70,11 +81,110 @@ p {
 }
 
 /* Visuals */
-.visuals {
+/* .visuals {
+} */
+.months {
+  grid-area: months;
+}
+.days {
+  grid-area: days;
+}
+.squares {
+  grid-area: squares;
+}
+.grid {
+  display: inline-grid;
+  grid-template-areas: "empty months" "days squares";
+  grid-template-columns: auto 1fr;
+  grid-gap: 6px;
+
+  font-size: 10px;
+  padding: 12px;
+  border: 1px #e1e4e8 solid;
+}
+.months {
+  display: grid;
+  grid-template-columns:
+    calc(var(--week-width) * 4) /* Jan */
+    calc(var(--week-width) * 4) /* Feb */
+    calc(var(--week-width) * 4) /* Mar */
+    calc(var(--week-width) * 5) /* Apr */
+    calc(var(--week-width) * 4) /* May */
+    calc(var(--week-width) * 4) /* Jun */
+    calc(var(--week-width) * 5) /* Jul */
+    calc(var(--week-width) * 4) /* Aug */
+    calc(var(--week-width) * 4) /* Sep */
+    calc(var(--week-width) * 5) /* Oct */
+    calc(var(--week-width) * 4) /* Nov */
+    calc(var(--week-width) * 5) /* Dec */;
+}
+.days,
+.squares {
+  display: grid;
+  grid-gap: var(--square-gap);
+  grid-template-rows: repeat(7, var(--square-size));
+}
+.squares {
+  grid-auto-flow: column;
+  grid-auto-columns: var(--square-size);
+}
+/* Grid Styling */
+.days li:nth-child(odd) {
+  visibility: hidden;
+}
+.squares li {
+  background-color: #ebedf0;
+  border-radius: 2px;
+}
+.squares li[data-level="1"] {
+  background-color: rgb(155, 233, 168);
+}
+.squares li[data-level="2"] {
+  background-color: rgb(64, 196, 99);
+}
+.squares li[data-level="3"] {
+  background-color: rgb(48, 161, 78);
+}
+.squares li[data-level="4"] {
+  background-color: rgb(33, 110, 57);
 }
 
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltip-text {
+  position: absolute;
+  z-index: 1;
+
+  min-width: 120px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* half width to center the tooltip */
+
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+}
+.tooltip .tooltip-text::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* at bottom of tooltip */
+  left: 50%; /* centered */
+  margin-left: -5px; /* keeps arrow centered = border-width  */
+  border-width: 5px; /* size of arrow */
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.5) transparent transparent transparent;
+}
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
 /* Icons */
-.icons {
+/* .icons {
   display: flex;
   justify-content: space-between;
   padding: 10px 22px;
@@ -97,4 +207,4 @@ p {
 .icon-div .fa {
   font-size: 32px;
   color: #2f5876;
-}
+} */

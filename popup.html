@@ -16,16 +16,43 @@
       <img src="images/stack-overflow.png" alt="Stack Overflow" class="logo-icon">How bad is your code?
     </h1>
     <div class="header-content">
+      <p class="details"><span class="details-description">First Active </span><span id="first-active"></span></p>
       <p class="details"><span class="details-description">Last Active </span><span id="last-active">today</span></p>
-      <p class="details"><span class="details-description">Total Visits </span><span id="total-visits"></span>
+      <p class="details"><span class="details-description">Total Visits </span><span id="total-visits">000</span>
       </p>
     </div>
   </div>
   <div class="visuals">
-    <p>You've gone on StackOverflow <span class="count"></span> times</p>
-    <p>Since your first visit (or you cleared your history) on <span class="first-visit"></span></p>
+    <div class="grid">
+      <ul class="months">
+        <li>Jan</li>
+        <li>Feb</li>
+        <li>Mar</li>
+        <li>Apr</li>
+        <li>May</li>
+        <li>Jun</li>
+        <li>Jul</li>
+        <li>Aug</li>
+        <li>Sep</li>
+        <li>Oct</li>
+        <li>Nov</li>
+        <li>Dec</li>
+      </ul>
+      <ul class="days">
+        <li>Sun</li>
+        <li>Mon</li>
+        <li>Tue</li>
+        <li>Wed</li>
+        <li>Thu</li>
+        <li>Fri</li>
+        <li>Sat</li>
+      </ul>
+      <ul class="squares" id="squares">
+        <!-- Squares added with popup.js -->
+      </ul>
+    </div>
   </div>
-  <div class="icons">
+  <!-- <div class="icons">
     <div class="icon-div">
       <a href="https://www.traversymedia.com" target="_blank">
         <i class="fa fa-globe"></i></a>
@@ -34,7 +61,7 @@
       <a href="https://www.github.com/bradtraversy" target="_blank">
         <i class="fa fa-github"></i></a>
     </div>
-  </div>
+  </div> -->
   <script src="popup.js"></script>
 </body>
 
