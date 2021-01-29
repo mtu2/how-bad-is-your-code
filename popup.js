@@ -15,6 +15,7 @@ const MONTHS_SHORT = [
   "Nov",
   "Dec",
 ];
+const MONTHS_WEEKS_WIDTH = [4, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 5];
 
 function buildFromSettings() {
   chrome.storage.sync.get(
@@ -137,7 +138,21 @@ function buildGridSquaresDom(urlTimeSummary) {
   }
 }
 
-function buildGridMonthDom() {}
+function buildGridMonthDom() {
+  const start = 1 + new Date().getMonth();
+  let styling = "";
+
+  for (let i = 0; i < 12; i++) {
+    const index = start + i >= 12 ? start + i - 12 : start + i;
+    styling += `calc(var(--week-width) * ${MONTHS_WEEKS_WIDTH[index]}) `;
+
+    document
+      .getElementById("months")
+      .insertAdjacentHTML("beforeend", `<li>${MONTHS_SHORT[index]}</li>`);
+  }
+
+  document.getElementById("months").style.gridTemplateColumns = styling;
+}
 
 // Set "Last Active" to last time url visited
 function setLastActive(lastTime) {
