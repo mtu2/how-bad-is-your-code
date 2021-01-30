@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", buildFromSettings);
+document.addEventListener("DOMContentLoaded", buildDom);
 
-const NUMBER_MONTHS_SHOWN = 9;
+const NUMBER_MONTHS_SHOWN = 8;
 const NUMBER_DAYS_SHOWN = calcNumberDaysToShow(NUMBER_MONTHS_SHOWN);
 const MONTHS_SHORT = [
   "Jan",
@@ -18,60 +18,77 @@ const MONTHS_SHORT = [
 ];
 const MONTHS_WEEKS_WIDTH = [4, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 5];
 
-function buildFromSettings() {
-  chrome.storage.sync.get(
-    { sites: "https://stackoverflow.com/", countDaily: false },
-    (items) => {
-      const urls = items.sites.split(/\r?\n/);
-      getVisitTimes(urls);
-    }
-  );
+async function buildDom() {
+  const settings = await getSettings();
+  const urls = settings.sites.split(/\r?\n/);
+
+  const {
+    lastActive,
+    firstActive,
+    totalVisits,
+    urlVisitTimes,
+  } = await getVisitTimeData(urls);
+
+  setLastActive(lastActive);
+  setFirstActive(firstActive);
+  setTotalVisits(totalVisits);
+
+  const urlTimeSummary = processVisitTimes(urlVisitTimes);
+  buildGridSquaresDom(urlTimeSummary);
+  buildGridMonthDom();
 }
 
-// Search history to find number of vists to specified url
-function getVisitTimes(urls) {
+function getSettings() {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(
+      { sites: "https://stackoverflow.com/", countDaily: false },
+      (items) => resolve(items)
+    );
+  });
+}
+
+// Search history to find number of vists to specified url and other data
+function getVisitTimeData(urls) {
   const microsecondsForFiveYears = 1000 * 60 * 60 * 24 * 365 * 5;
   const fiveYearsAgo = new Date().getTime() - microsecondsForFiveYears;
   const urlVisitTimes = {};
+
   let checkedUrls = 0;
   let lastActive = new Date("January 1, 1970");
   let firstActive = new Date();
   let totalVisits = 0;
 
-  for (const url of urls) {
-    chrome.history.search(
-      {
-        text: url,
-        startTime: fiveYearsAgo,
-        maxResults: 1000000000,
-      },
-      (historyItems) => {
-        const visitTimes = historyItems.map((item) => item.lastVisitTime);
-        urlVisitTimes[url] = visitTimes;
+  return new Promise((resolve, reject) => {
+    for (const url of urls) {
+      chrome.history.search(
+        {
+          text: url,
+          startTime: fiveYearsAgo,
+          maxResults: 1000000000,
+        },
+        (historyItems) => {
+          const visitTimes = historyItems.map((item) => item.lastVisitTime);
+          urlVisitTimes[url] = visitTimes;
 
-        // check and update last active and total visits and increment checked urls
-        if (visitTimes[0] > lastActive) {
-          lastActive = new Date(visitTimes[0]);
-        }
-        if (visitTimes[visitTimes.length - 1] < firstActive) {
-          firstActive = new Date(visitTimes[visitTimes.length - 1]);
-        }
+          // check and update last active and total visits and increment checked urls
+          if (visitTimes[0] > lastActive) {
+            lastActive = new Date(visitTimes[0]);
+          }
+          if (visitTimes[visitTimes.length - 1] < firstActive) {
+            firstActive = new Date(visitTimes[visitTimes.length - 1]);
+          }
 
-        totalVisits += visitTimes.length;
-        checkedUrls++;
+          totalVisits += visitTimes.length;
+          checkedUrls++;
 
-        // if all urls checked then process
-        if (checkedUrls == urls.length) {
-          setLastActive(lastActive);
-          setFirstActive(firstActive);
-          setTotalVisits(totalVisits);
-          const urlTimeSummary = processVisitTimes(urlVisitTimes);
-          buildGridSquaresDom(urlTimeSummary);
-          buildGridMonthDom();
+          // if all urls checked then process
+          if (checkedUrls == urls.length) {
+            resolve({ lastActive, firstActive, totalVisits, urlVisitTimes });
+          }
         }
-      }
-    );
-  }
+      );
+    }
+  });
 }
 
 // Sort visits into map with key: date and value: number of visits
@@ -138,7 +155,6 @@ function buildGridSquaresDom(urlTimeSummary) {
       );
   }
 }
-
 function buildGridMonthDom() {
   const start = 13 - NUMBER_MONTHS_SHOWN + new Date().getMonth();
   let styling = "";
@@ -161,14 +177,12 @@ function setLastActive(lastTime) {
     lastTime
   );
 }
-
 // Set "First Active" to first time url visited
 function setFirstActive(firstTime) {
   document.getElementById("first-active").textContent = formatDateForActive(
     firstTime
   );
 }
-
 // Set "Total Visits" to total number of visits to url
 function setTotalVisits(num) {
   document.getElementById("total-visits").textContent = num;

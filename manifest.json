@@ -22,5 +22,5 @@
     "page": "options.html",
     "open_in_tab": false
   },
-  "permissions": ["history", "storage"]
+  "permissions": ["history", "storage", "bookmarks"]
 }
