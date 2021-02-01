@@ -162,6 +162,9 @@ code {
 
 .content .content-bottom .content-user-bottom .user-profile-image {
   grid-area: profile-image;
+}
+
+.content .content-bottom .content-user-bottom .user-profile-image img {
   width: 28px;
   border-radius: 3px;
   margin-right: 8px;

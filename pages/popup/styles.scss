@@ -177,9 +177,11 @@ code {
       .user-profile-image {
         grid-area: profile-image;
         // width: 32px;
-        width: 28px;
-        border-radius: 3px;
-        margin-right: 8px;
+        img {
+          width: 28px;
+          border-radius: 3px;
+          margin-right: 8px;
+        }
       }
       .user-display-name {
         grid-area: display-name;

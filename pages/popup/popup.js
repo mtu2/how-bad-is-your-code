@@ -21,17 +21,19 @@ const MONTHS_WEEKS_WIDTH = [4, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 5];
 async function buildDom() {
   // Get settings
   const settings = await getSettings();
-  console.log(settings);
-
-  const urls = settings.sites.split(/\r?\n/);
 
   // Build content description related DOM
+  const urls = settings.sites.split(/\r?\n/);
   buildContentDescriptionDom(urls);
 
   // Get and build bookmark related DOM
   const bookmarks = await getBookmarks(urls);
   setSavedBookmarkText(bookmarks.length > 0);
   buildBookmarkListDom(bookmarks);
+
+  // Build user profile DOM
+  if (settings.accountId)
+    buildUserDom(settings.accountId, settings.accountInfo);
 
   // Get and build visit time related DOM
   const {
@@ -131,6 +133,50 @@ function buildBookmarkListDom(bookmarkList) {
       `<li><a href=${ele.url} target="_blank" title=${ele.url}>${ele.title}</a></li>`
     );
   });
+}
+
+/* USER DOM FUNCTIONS */
+function buildUserDom(accountId, accountInfo) {
+  const contentUserBottom = $("#content-user-bottom");
+  console.log(accountInfo);
+
+  console.log(new Date(accountInfo.last_access_date * 1000));
+
+  contentUserBottom
+    .append(
+      `<p class="user-action-time" title=${new Date(
+        accountInfo.last_access_date * 1000
+      ).toUTCString()}>last seen ${formatDateForUserAccess(
+        accountInfo.last_access_date * 1000
+      )}</p>`
+    )
+    .append(
+      `<a class="user-profile-image" href="https://stackoverflow.com/users/${accountId}" target="_blank"><img class="user-profile-image-icon" alt="Profile image" src=${accountInfo.profile_image}></a>`
+    )
+    .append(
+      `<a class="user-display-name" href="https://stackoverflow.com/users/${accountId}" target="_blank">${accountInfo.display_name}</a>`
+    );
+
+  let badges = "";
+
+  // <a href="https://stackoverflow.com/" target="_blank" title="https://stackoverflow.com/"><img
+  //         src="/images/stack-overflow.png" alt="Stack Overflow" class="icon"></a>
+
+  ["gold", "silver", "bronze"].forEach((type) => {
+    const count = accountInfo.badge_counts[type];
+    if (count > 0) {
+      badges += `<span class="badge" title="${count} ${type} badges">
+      <span class="badge-icon ${type}-badge-icon"></span>
+      <span class="badge-count">${count}</span>
+      </span>`;
+    }
+  });
+
+  contentUserBottom.append(
+    `<p class="user-flair"><span class="reputation-score" title="reputation score ${
+      accountInfo.reputation
+    }">${formatUserReputation(accountInfo.reputation)}</span>${badges}</p>`
+  );
 }
 
 /* VISIT TIME FUNCTIONS */
@@ -242,6 +288,7 @@ function buildGridSquaresDom(urlTimeSummary) {
     );
   }
 }
+
 function buildGridMonthDom() {
   const months = $("#months");
   const start = 13 - NUMBER_MONTHS_SHOWN + new Date().getMonth();
@@ -256,19 +303,19 @@ function buildGridMonthDom() {
 
   months.css("grid-template-columns", styling);
 }
-// Set "First Active" to first time url visited
+
 function setFirstActive(firstTime) {
   $("#first-active")
     .text(formatDateForActive(firstTime))
     .attr("title", new Date(firstTime).toUTCString());
 }
-// Set "Last Active" to last time url visited
+
 function setLastActive(lastTime) {
   $("#last-active")
     .text(formatDateForActive(lastTime))
     .attr("title", new Date(lastTime).toUTCString());
 }
-// Set "Total Visits" to total number of visits to url
+
 function setTotalVisits(num) {
   $("#total-visits").text(num).attr("title", `${num} visits`);
 }
@@ -282,6 +329,7 @@ function formatDateFromDaysAgo(daysAgo) {
     MONTHS_SHORT[dateObj.getMonth()]
   } ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
 }
+
 function formatDateForActive(lastTime) {
   // e.g. today, yesterday, x days ago, x months ago, x years ago
   const diff = Date.now() - new Date(lastTime);
@@ -297,6 +345,27 @@ function formatDateForActive(lastTime) {
 
   return lastActive;
 }
+
+function formatDateForUserAccess(lastAccess) {
+  // e.g. Aug 12 '13 at 14:51
+  const dateObj = new Date(lastAccess);
+  return `${
+    MONTHS_SHORT[dateObj.getMonth()]
+  } ${dateObj.getDate()}, '${dateObj
+    .getFullYear()
+    .toString()
+    .slice(-2)} at ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+}
+
+function formatUserReputation(num) {
+  if (num > 1000000) return (num / 1000000).toFixed(1) + "m";
+  else if (num > 100000) return (num / 1000).toFixed(0) + "k";
+  else if (num > 10000) return (num / 1000).toFixed(1) + "k";
+  else if (num > 1000)
+    return `${num.toString().slice(0, 1)}, ${num.toString().slice(1)}}`;
+  else return num;
+}
+
 function calcPercentiles(data) {
   const filteredData = data.filter((val) => val != 0);
   filteredData.sort((a, b) => a - b); // ascending order
@@ -309,6 +378,7 @@ function calcPercentiles(data) {
   }
   return percentiles;
 }
+
 function calcSquareLevel(views, percentiles) {
   let dataLevel;
 
@@ -320,6 +390,7 @@ function calcSquareLevel(views, percentiles) {
 
   return dataLevel;
 }
+
 function calcNumberDaysToShow(numberMonths) {
   // return days in specified numberMonths - correction to current day of week
   const currentDate = new Date();
