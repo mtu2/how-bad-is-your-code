@@ -62,7 +62,6 @@ function getSettings() {
 
 /* CONTENT DESCRIPTION DOM FUNCTIONS */
 function buildContentDescriptionDom(urls) {
-  const contentDescription = document.getElementById("content-description");
   const prefix = "http://";
   const prefix2 = "https://";
   let tracking = "";
@@ -88,20 +87,17 @@ function buildContentDescriptionDom(urls) {
     });
   }
 
-  const optionsPage = document.createElement("code");
-  optionsPage.title = "How bad is your code? - options page";
-  optionsPage.innerHTML = "options page";
-  optionsPage.onclick = () => chrome.runtime.openOptionsPage();
+  const optionsPage = $("<code />")
+    .html("options page")
+    .attr("title", "How bad is your code? - options page")
+    .click(() => chrome.runtime.openOptionsPage());
 
-  contentDescription.insertAdjacentHTML(
-    "afterbegin",
-    `Currently tracking the number of visits and bookmarks to ${tracking}. Websites tracked and other settings can be edited in the `
-  );
-  contentDescription.insertAdjacentElement("beforeend", optionsPage);
-  contentDescription.insertAdjacentHTML(
-    "beforeend",
-    ". Link your stack overflow account for more details."
-  );
+  $("#content-description")
+    .append(
+      `Currently tracking the number of visits and bookmarks to ${tracking}. Websites tracked and other settings can be edited in the `
+    )
+    .append(optionsPage)
+    .append(". Link your stack overflow account for more details.");
 }
 
 /* BOOKMARK + BOOKMARK DOM FUNCTIONS */
@@ -124,18 +120,16 @@ function getBookmarks(urls) {
   });
 }
 function setSavedBookmarkText(bool) {
-  const savedBookmarkText = document.getElementById("saved-bookmarks");
-  if (bool) savedBookmarkText.textContent = "Saved bookmarks:";
-  else savedBookmarkText.textContent = "";
+  const savedBookmarkText = $("#saved-bookmarks");
+  if (bool) savedBookmarkText.text("Saved bookmarks:");
+  else savedBookmarkText.text("");
 }
-function buildBookmarkListDom(bookmarks) {
-  bookmarks.forEach((ele) => {
-    document
-      .getElementById("bookmarks")
-      .insertAdjacentHTML(
-        "beforeend",
-        `<li><a href=${ele.url} target="_blank" title=${ele.url}>${ele.title}</a></li>`
-      );
+function buildBookmarkListDom(bookmarkList) {
+  const bookmarks = $("#bookmarks");
+  bookmarkList.forEach((ele) => {
+    bookmarks.append(
+      `<li><a href=${ele.url} target="_blank" title=${ele.url}>${ele.title}</a></li>`
+    );
   });
 }
 
@@ -233,23 +227,23 @@ function buildGridSquaresDom(urlTimeSummary) {
   // calculate 25th, 50th and 75th percentiles from non-zero views
   const percentiles = calcPercentiles(squaresTotal);
 
+  const squares = $("#squares");
+
   for (let i = NUMBER_DAYS_SHOWN - 1; i >= 0; i--) {
     const finishedText = `${
       squaresTooltipText[i] == "" ? "No visits" : squaresTooltipText[i]
     } on ${formatDateFromDaysAgo(i)}`;
 
-    document
-      .getElementById("squares")
-      .insertAdjacentHTML(
-        "beforeend",
-        `<li class="tooltip" data-level="${calcSquareLevel(
-          squaresTotal[i],
-          percentiles
-        )}"><span class="tooltip-text">${finishedText}</span></li>`
-      );
+    squares.append(
+      `<li class="tooltip" data-level="${calcSquareLevel(
+        squaresTotal[i],
+        percentiles
+      )}"><span class="tooltip-text">${finishedText}</span></li>`
+    );
   }
 }
 function buildGridMonthDom() {
+  const months = $("#months");
   const start = 13 - NUMBER_MONTHS_SHOWN + new Date().getMonth();
   let styling = "";
 
@@ -257,31 +251,26 @@ function buildGridMonthDom() {
     const index = start + i >= 12 ? start + i - 12 : start + i;
     styling += `calc(var(--week-width) * ${MONTHS_WEEKS_WIDTH[index]}) `;
 
-    document
-      .getElementById("months")
-      .insertAdjacentHTML("beforeend", `<li>${MONTHS_SHORT[index]}</li>`);
+    months.append(`<li>${MONTHS_SHORT[index]}</li>`);
   }
 
-  document.getElementById("months").style.gridTemplateColumns = styling;
+  months.css("grid-template-columns", styling);
 }
 // Set "First Active" to first time url visited
 function setFirstActive(firstTime) {
-  const firstActive = document.getElementById("first-active");
-
-  firstActive.textContent = formatDateForActive(firstTime);
-  firstActive.title = new Date(firstTime).toUTCString();
+  $("#first-active")
+    .text(formatDateForActive(firstTime))
+    .attr("title", new Date(firstTime).toUTCString());
 }
 // Set "Last Active" to last time url visited
 function setLastActive(lastTime) {
-  const lastActive = document.getElementById("last-active");
-
-  lastActive.textContent = formatDateForActive(lastTime);
-  lastActive.title = new Date(lastTime).toUTCString();
+  $("#last-active")
+    .text(formatDateForActive(lastTime))
+    .attr("title", new Date(lastTime).toUTCString());
 }
 // Set "Total Visits" to total number of visits to url
 function setTotalVisits(num) {
-  document.getElementById("total-visits").textContent = num;
-  document.getElementById("total-visits").title = `${num} visits`;
+  $("#total-visits").text(num).attr("title", `${num} visits`);
 }
 
 // HELPER FUNCTIONS
