@@ -7,6 +7,7 @@
     "default_popup": "/pages/popup/popup.html",
     "default_icon": {
       "16": "/images/icon_16.png",
+      "24": "/images/icon_24.png",
       "32": "/images/icon_32.png",
       "48": "/images/icon_48.png",
       "128": "/images/icon_128.png"
