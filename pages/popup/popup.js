@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", buildDom);
+$(document).ready(() => buildDom());
 
 const NUMBER_MONTHS_SHOWN = 8;
 const NUMBER_DAYS_SHOWN = calcNumberDaysToShow(NUMBER_MONTHS_SHOWN);
