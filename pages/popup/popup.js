@@ -21,6 +21,8 @@ const MONTHS_WEEKS_WIDTH = [4, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 5];
 async function buildDom() {
   // Get settings
   const settings = await getSettings();
+  console.log(settings);
+
   const urls = settings.sites.split(/\r?\n/);
 
   // Build content description related DOM
@@ -52,7 +54,7 @@ async function buildDom() {
 function getSettings() {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get(
-      { sites: "https://stackoverflow.com/", countDaily: false },
+      { sites: "https://stackoverflow.com/", accountId: "", accountInfo: null },
       (items) => resolve(items)
     );
   });

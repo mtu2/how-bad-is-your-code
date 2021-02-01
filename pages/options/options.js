@@ -16,7 +16,6 @@ async function save() {
   chrome.storage.sync.set(
     {
       sites,
-      countDaily,
       accountId,
       accountInfo,
     },
@@ -29,7 +28,6 @@ function load() {
   chrome.storage.sync.get(
     {
       sites: "https://stackoverflow.com/",
-      countDaily: false,
       accountId: "",
       accountInfo: null,
     },

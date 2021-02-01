@@ -11,6 +11,7 @@
 </head>
 
 <body>
+  <!-- Header -->
   <div class="header">
     <h1 class="logo">
       <a href="https://stackoverflow.com/" target="_blank" title="https://stackoverflow.com/"><img
@@ -27,29 +28,49 @@
       </ul>
     </div>
   </div>
+
+  <!-- Content -->
   <div class="content">
-    <p class="content-description" id="content-description"></p>
-    <p id="saved-bookmarks"></p>
-    <ul class="bookmarks" id="bookmarks"></ul>
+    <div class="content-top">
+      <p class="content-description" id="content-description"></p>
+      <p id="saved-bookmarks"></p>
+      <ul class="bookmarks" id="bookmarks"></ul>
+    </div>
+
     <div class="content-bottom">
       <ul class="content-links-bottom">
         <li class="details details-description">Share</li>
         <li class="details details-description">Edit</li>
         <li class="details details-description">Follow</li>
       </ul>
+
       <div class="content-user-bottom">
-        <div class="user-info">
-          <p class="user-action-time">
-            asked 53 secs ago
-          </p>
-          <div class="user-details"></div>
-        </div>
+        <p class="user-action-time">asked Jun 27 '12 at 13:51</p>
+        <img class="user-profile-image"
+          src="https://www.gravatar.com/avatar/d8e51937042f6344943fa03f47a31a50?s=328&d=identicon&r=PG&f=1">
+        <a class="user-display-name">GManNickG</a>
+        <p class="user-flair">
+          <span class="reputation-score">452k</span>
+          <span class="badge">
+            <span class="badge-icon gold-badge-icon"></span>
+            <span class="badge-count">48</span>
+          </span>
+          <span class="badge">
+            <span class="badge-icon silver-badge-icon"></span>
+            <span class="badge-count">457</span>
+          </span>
+          <span class="badge">
+            <span class="badge-icon bronze-badge-icon"></span>
+            <span class="badge-count">532</span>
+          </span>
+        </p>
       </div>
     </div>
   </div>
+
+  <!-- Grid -->
   <div class="grid">
-    <ul class="months" id="months">
-    </ul>
+    <ul class="months" id="months"></ul>
     <ul class="days">
       <li>Sun</li>
       <li>Mon</li>
@@ -59,20 +80,9 @@
       <li>Fri</li>
       <li>Sat</li>
     </ul>
-    <ul class="squares" id="squares">
-      <!-- Squares added with popup.js -->
-    </ul>
+    <ul class="squares" id="squares"></ul>
   </div>
-  <!-- <div class="icons">
-    <div class="icon-div">
-      <a href="https://www.traversymedia.com" target="_blank">
-        <i class="fa fa-globe"></i></a>
-    </div>
-    <div class="icon-div">
-      <a href="https://www.github.com/bradtraversy" target="_blank">
-        <i class="fa fa-github"></i></a>
-    </div>
-  </div> -->
+
   <script type="module" src="popup.js"></script>
 </body>
 
