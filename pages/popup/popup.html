@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How bad is your code?</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="header">
+    <h1 class="logo">
+      <a href="https://stackoverflow.com/" target="_blank" title="https://stackoverflow.com/"><img
+          src="/images/stack-overflow.png" alt="Stack Overflow" class="icon"></a>How
+      bad is your code?
+    </h1>
+    <div class="header-bottom" id="header-bottom">
+      <ul>
+        <li class="details"><span class="details-description">First Active </span><span id="first-active"></span></li>
+        <li class="details"><span class="details-description">Last Active </span><span id="last-active">today</span>
+        </li>
+        <li class="details"><span class="details-description">Total Visits </span><span id="total-visits">000</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="content">
+    <p class="content-description" id="content-description"></p>
+    <p id="saved-bookmarks"></p>
+    <ul class="bookmarks" id="bookmarks"></ul>
+    <div class="content-bottom">
+      <ul class="content-links-bottom">
+        <li class="details details-description">Share</li>
+        <li class="details details-description">Edit</li>
+        <li class="details details-description">Follow</li>
+      </ul>
+      <div class="content-user-bottom">
+        <div class="user-info">
+          <p class="user-action-time">
+            asked 53 secs ago
+          </p>
+          <div class="user-details"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <ul class="months" id="months">
+    </ul>
+    <ul class="days">
+      <li>Sun</li>
+      <li>Mon</li>
+      <li>Tue</li>
+      <li>Wed</li>
+      <li>Thu</li>
+      <li>Fri</li>
+      <li>Sat</li>
+    </ul>
+    <ul class="squares" id="squares">
+      <!-- Squares added with popup.js -->
+    </ul>
+  </div>
+  <!-- <div class="icons">
+    <div class="icon-div">
+      <a href="https://www.traversymedia.com" target="_blank">
+        <i class="fa fa-globe"></i></a>
+    </div>
+    <div class="icon-div">
+      <a href="https://www.github.com/bradtraversy" target="_blank">
+        <i class="fa fa-github"></i></a>
+    </div>
+  </div> -->
+  <script type="module" src="popup.js"></script>
+</body>
+
+</html>

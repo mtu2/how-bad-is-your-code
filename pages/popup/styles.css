@@ -1,33 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-
 /* Document Settings */
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-:root {
-  --font-color-dark: #242729;
-  --font-color-light: #3c4146;
-  --bg-color-gray: #e4e6e8;
-  --square-size: 10px;
-  --square-gap: 3px;
-  --week-width: calc(var(--square-size) + var(--square-gap));
-}
+
 html {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
+
 body {
   background-color: #ffffff;
   min-height: 180px;
   width: auto;
-  min-width: 384px;
+  min-width: 539px;
   padding: 16px;
 }
+
 html::-webkit-scrollbar {
   display: none;
 }
+
 textarea,
 input,
 button,
@@ -35,148 +30,189 @@ select {
   font-family: inherit;
   font-size: inherit;
 }
+
+/* Variables */
+:root {
+  --week-width: calc(10px + 3px);
+}
+
+/* Default Styling */
 h1 {
   font-size: 22px;
   line-height: 30px;
   font-weight: 400;
-  color: var(--font-color-light);
+  color: #3c4146;
 }
+
 p {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  color: var(--font-color-dark);
+  color: #242729;
 }
+
 code {
   font-family: "Consolas", monospace;
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
-
   padding: 2px 4px;
   border-radius: 3px;
-  background-color: var(--bg-color-gray);
-  color: var(--font-color-dark);
+  background-color: #e4e6e8;
+  color: #242729;
 }
+
 .details {
   font-size: 12px;
   font-weight: 400;
   line-height: 17px;
   margin-right: 16px;
   vertical-align: baseline;
-  color: var(--font-color-dark);
+  color: #242729;
 }
+
 .details-description {
-  color: var(--font-color-light);
+  color: #3c4146;
+}
+
+.user-info {
+  font-size: 13px;
+  background-color: #e1ecf4;
+  padding: 5px 7px;
+}
+
+.user-action-time {
+  color: #6a737c;
+}
+
+.user-details {
+  color: #0077cc;
+}
+
+.reputation-score {
+  font-size: 12px;
+  margin-right: 2px;
 }
 
 /* Header */
 .header {
   align-items: center;
 }
-.logo {
+
+.header .logo {
   margin-bottom: 8px;
 }
-.header-bottom {
-  display: flex;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e4e6e8;
-  margin-bottom: 16px;
-}
-.logo-icon {
+
+.header .logo .icon {
   width: 28px;
   vertical-align: text-bottom;
   margin-right: 12px;
 }
 
-/* Content */
-.content {
-}
-.content-bottom {
+.header .header-bottom ul {
   display: flex;
   padding-bottom: 12px;
   border-bottom: 1px solid #e4e6e8;
   margin-bottom: 16px;
 }
+
+.header .header-bottom ul li {
+  list-style: none;
+}
+
+/* Content */
 .content p {
   margin-bottom: 6px;
 }
-.links {
+
+.content .content-description a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.content .content-description code:hover {
+  cursor: pointer;
+}
+
+.content .bookmarks {
   padding-left: 24px;
   margin-bottom: 16px;
 }
-.links ul li {
+
+.content .bookmarks ul li {
   margin: 0px 4px;
 }
 
+.content .content-bottom .content-links-bottom {
+  display: flex;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e4e6e8;
+  margin-bottom: 16px;
+}
+
+.content .content-bottom .content-links-bottom li {
+  list-style: none;
+}
+
 /* Grid */
-.months {
-  grid-area: months;
-}
-.days {
-  grid-area: days;
-}
-.squares {
-  grid-area: squares;
-}
 .grid {
   display: inline-grid;
   grid-template-areas: "empty months" "days squares";
   grid-template-columns: auto 1fr;
   grid-gap: 6px;
-
   font-size: 10px;
   padding: 12px;
   border: 1px #e1e4e8 solid;
 }
+
 .grid ul li {
   list-style: none;
 }
-.months {
+
+.grid .months {
+  grid-area: months;
   display: grid;
 }
-/* grid-template-columns:
-calc(var(--week-width) * 4) Jan 
-calc(var(--week-width) * 4) Feb 
-calc(var(--week-width) * 4) Mar 
-calc(var(--week-width) * 5) Apr 
-calc(var(--week-width) * 4) May 
-calc(var(--week-width) * 4) Jun 
-calc(var(--week-width) * 5) Jul 
-calc(var(--week-width) * 4) Aug 
-calc(var(--week-width) * 4) Sep 
-calc(var(--week-width) * 5) Oct 
-calc(var(--week-width) * 4) Nov 
-calc(var(--week-width) * 5) Dec ; */
-.days,
-.squares {
+
+.grid .days {
+  grid-area: days;
   display: grid;
-  grid-gap: var(--square-gap);
-  grid-template-rows: repeat(7, var(--square-size));
+  grid-gap: 3px;
+  grid-template-rows: repeat(7, 10px);
 }
-.squares {
-  grid-auto-flow: column;
-  grid-auto-columns: var(--square-size);
-}
-/* Grid Styling */
-.days li:nth-child(odd) {
+
+.grid .days li:nth-child(odd) {
   visibility: hidden;
 }
-.squares li {
+
+.grid .squares {
+  grid-area: squares;
+  display: grid;
+  grid-gap: 3px;
+  grid-template-rows: repeat(7, 10px);
+  grid-auto-flow: column;
+  grid-auto-columns: 10px;
+}
+
+.grid .squares li {
   background-color: #ebedf0;
   border-radius: 2px;
 }
-.squares li[data-level="1"] {
-  background-color: rgb(155, 233, 168);
+
+.grid .squares li[data-level="1"] {
+  background-color: #9be9a8;
 }
-.squares li[data-level="2"] {
-  background-color: rgb(64, 196, 99);
+
+.grid .squares li[data-level="2"] {
+  background-color: #40c463;
 }
-.squares li[data-level="3"] {
-  background-color: rgb(48, 161, 78);
+
+.grid .squares li[data-level="3"] {
+  background-color: #30a14e;
 }
-.squares li[data-level="4"] {
-  background-color: rgb(33, 110, 57);
+
+.grid .squares li[data-level="4"] {
+  background-color: #216e39;
 }
 
 /* Tooltip container */
@@ -184,15 +220,15 @@ calc(var(--week-width) * 5) Dec ; */
   position: relative;
   display: inline-block;
 }
+
 .tooltip .tooltip-text {
   position: absolute;
   z-index: 1;
-
   min-width: 120px;
   bottom: 100%;
   left: 50%;
-  margin-left: -60px; /* half width to center the tooltip */
-
+  margin-left: -60px;
+  /* half width to center the tooltip */
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
@@ -200,16 +236,22 @@ calc(var(--week-width) * 5) Dec ; */
   padding: 5px 0;
   border-radius: 6px;
 }
+
 .tooltip .tooltip-text::after {
   content: " ";
   position: absolute;
-  top: 100%; /* at bottom of tooltip */
-  left: 50%; /* centered */
-  margin-left: -5px; /* keeps arrow centered = border-width  */
-  border-width: 5px; /* size of arrow */
+  top: 100%;
+  /* at bottom of tooltip */
+  left: 50%;
+  /* centered */
+  margin-left: -5px;
+  /* keeps arrow centered = border-width  */
+  border-width: 5px;
+  /* size of arrow */
   border-style: solid;
   border-color: rgba(0, 0, 0, 0.5) transparent transparent transparent;
 }
+
 .tooltip:hover .tooltip-text {
   visibility: visible;
 }

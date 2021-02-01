@@ -19,9 +19,19 @@ const MONTHS_SHORT = [
 const MONTHS_WEEKS_WIDTH = [4, 4, 4, 5, 4, 4, 5, 4, 4, 5, 4, 5];
 
 async function buildDom() {
+  // Get settings
   const settings = await getSettings();
   const urls = settings.sites.split(/\r?\n/);
 
+  // Build content description related DOM
+  buildContentDescriptionDom(urls);
+
+  // Get and build bookmark related DOM
+  const bookmarks = await getBookmarks(urls);
+  setSavedBookmarkText(bookmarks.length > 0);
+  buildBookmarkListDom(bookmarks);
+
+  // Get and build visit time related DOM
   const {
     lastActive,
     firstActive,
@@ -29,8 +39,8 @@ async function buildDom() {
     urlVisitTimes,
   } = await getVisitTimeData(urls);
 
-  setLastActive(lastActive);
   setFirstActive(firstActive);
+  setLastActive(lastActive);
   setTotalVisits(totalVisits);
 
   const urlTimeSummary = processVisitTimes(urlVisitTimes);
@@ -38,6 +48,7 @@ async function buildDom() {
   buildGridMonthDom();
 }
 
+/* SETTINGS FUNCTIONS */
 function getSettings() {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get(
@@ -47,6 +58,86 @@ function getSettings() {
   });
 }
 
+/* CONTENT DESCRIPTION DOM FUNCTIONS */
+function buildContentDescriptionDom(urls) {
+  const contentDescription = document.getElementById("content-description");
+  const prefix = "http://";
+  const prefix2 = "https://";
+  let tracking = "";
+
+  if (urls.length == 0) tracking = "no websites";
+  else if (urls.length == 1) tracking = `<code>${urls[0]}</code>`;
+  else {
+    urls.forEach((url, index) => {
+      let clickableUrl = url;
+      if (
+        url.substr(0, prefix.length) !== prefix &&
+        url.substr(0, prefix2.length) !== prefix2
+      ) {
+        clickableUrl = prefix + url;
+      }
+
+      const add =
+        index == urls.length - 1
+          ? `and <a href=${clickableUrl} target="_blank" title=${clickableUrl}><code>${url}</code></a>`
+          : `<a href=${clickableUrl} target="_blank" title=${clickableUrl}><code>${url}</code></a>, `;
+
+      tracking += add;
+    });
+  }
+
+  const optionsPage = document.createElement("code");
+  optionsPage.title = "How bad is your code? - options page";
+  optionsPage.innerHTML = "options page";
+  optionsPage.onclick = () => chrome.runtime.openOptionsPage();
+
+  contentDescription.insertAdjacentHTML(
+    "afterbegin",
+    `Currently tracking the number of visits and bookmarks to ${tracking}. Websites tracked and other settings can be edited in the `
+  );
+  contentDescription.insertAdjacentElement("beforeend", optionsPage);
+  contentDescription.insertAdjacentHTML(
+    "beforeend",
+    ". Link your stack overflow account for more details."
+  );
+}
+
+/* BOOKMARK + BOOKMARK DOM FUNCTIONS */
+function getBookmarks(urls) {
+  let checkedUrls = 0;
+  const bookmarks = [];
+
+  return new Promise((resolve, reject) => {
+    for (const url of urls) {
+      chrome.bookmarks.search(url, (bookmarkTreeNodes) => {
+        bookmarks.push(...bookmarkTreeNodes);
+        checkedUrls++;
+
+        // if all urls checked then process
+        if (checkedUrls == urls.length) {
+          resolve(bookmarks);
+        }
+      });
+    }
+  });
+}
+function setSavedBookmarkText(bool) {
+  const savedBookmarkText = document.getElementById("saved-bookmarks");
+  if (bool) savedBookmarkText.textContent = "Saved bookmarks:";
+  else savedBookmarkText.textContent = "";
+}
+function buildBookmarkListDom(bookmarks) {
+  bookmarks.forEach((ele) => {
+    document
+      .getElementById("bookmarks")
+      .insertAdjacentHTML(
+        "beforeend",
+        `<li><a href=${ele.url} target="_blank" title=${ele.url}>${ele.title}</a></li>`
+      );
+  });
+}
+
+/* VISIT TIME FUNCTIONS */
 // Search history to find number of vists to specified url and other data
 function getVisitTimeData(urls) {
   const microsecondsForFiveYears = 1000 * 60 * 60 * 24 * 365 * 5;
@@ -115,6 +206,7 @@ function processVisitTimes(urlVisitTimes) {
   return urlTimeSummary;
 }
 
+/* VISIT TIME DOM FUNCTIONS */
 function buildGridSquaresDom(urlTimeSummary) {
   // initialise array of 365 0s and array of 365 empty string
   const squaresTotal = [];
@@ -170,22 +262,24 @@ function buildGridMonthDom() {
 
   document.getElementById("months").style.gridTemplateColumns = styling;
 }
-
-// Set "Last Active" to last time url visited
-function setLastActive(lastTime) {
-  document.getElementById("last-active").textContent = formatDateForActive(
-    lastTime
-  );
-}
 // Set "First Active" to first time url visited
 function setFirstActive(firstTime) {
-  document.getElementById("first-active").textContent = formatDateForActive(
-    firstTime
-  );
+  const firstActive = document.getElementById("first-active");
+
+  firstActive.textContent = formatDateForActive(firstTime);
+  firstActive.title = new Date(firstTime).toUTCString();
+}
+// Set "Last Active" to last time url visited
+function setLastActive(lastTime) {
+  const lastActive = document.getElementById("last-active");
+
+  lastActive.textContent = formatDateForActive(lastTime);
+  lastActive.title = new Date(lastTime).toUTCString();
 }
 // Set "Total Visits" to total number of visits to url
 function setTotalVisits(num) {
   document.getElementById("total-visits").textContent = num;
+  document.getElementById("total-visits").title = `${num} visits`;
 }
 
 // HELPER FUNCTIONS
@@ -215,7 +309,6 @@ function formatDateForActive(lastTime) {
 function calcPercentiles(data) {
   const filteredData = data.filter((val) => val != 0);
   filteredData.sort((a, b) => a - b); // ascending order
-  console.log(filteredData);
 
   const percentiles = [];
   const interval = Math.floor(filteredData.length / 4);
