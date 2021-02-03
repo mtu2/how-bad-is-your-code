@@ -138,9 +138,6 @@ function buildBookmarkListDom(bookmarkList) {
 /* USER DOM FUNCTIONS */
 function buildUserDom(accountId, accountInfo) {
   const contentUserBottom = $("#content-user-bottom");
-  console.log(accountInfo);
-
-  console.log(new Date(accountInfo.last_access_date * 1000));
 
   contentUserBottom
     .append(
@@ -158,9 +155,6 @@ function buildUserDom(accountId, accountInfo) {
     );
 
   let badges = "";
-
-  // <a href="https://stackoverflow.com/" target="_blank" title="https://stackoverflow.com/"><img
-  //         src="/images/stack-overflow.png" alt="Stack Overflow" class="icon"></a>
 
   ["gold", "silver", "bronze"].forEach((type) => {
     const count = accountInfo.badge_counts[type];
@@ -405,3 +399,16 @@ function calcNumberDaysToShow(numberMonths) {
 
   return daysDiff;
 }
+
+// DUMMY ACCOUNT DATA
+// const ACCOUNT_INFO = {
+//   badge_counts: { bronze: 8876, gold: 784, silver: 8639 },
+//   creation_date: 1222430705,
+//   display_name: "Michael Jackson",
+//   last_access_date: 1612161739,
+//   last_modified_date: 1612019100,
+//   link: "https://stackoverflow.com/users/22656/jon-skeet",
+//   profile_image:
+//     "https://static.wikia.nocookie.net/real-life-heroes/images/2/2c/Michael_Jackson.jpg/revision/latest?cb=20191122190551",
+//   reputation: 1236915,
+// };

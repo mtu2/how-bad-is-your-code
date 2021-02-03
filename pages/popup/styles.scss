@@ -179,6 +179,7 @@ code {
         // width: 32px;
         img {
           width: 28px;
+          height: 28px;
           border-radius: 3px;
           margin-right: 8px;
         }
@@ -190,6 +191,7 @@ code {
         // line-height: 15px;
         line-height: 14px;
         color: $font-color-blue;
+        text-decoration: none;
       }
       .user-flair {
         grid-area: user-flair;

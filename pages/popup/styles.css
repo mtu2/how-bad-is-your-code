@@ -166,6 +166,7 @@ code {
 
 .content .content-bottom .content-user-bottom .user-profile-image img {
   width: 28px;
+  height: 28px;
   border-radius: 3px;
   margin-right: 8px;
 }
@@ -175,6 +176,7 @@ code {
   font-size: 12px;
   line-height: 14px;
   color: #0077cc;
+  text-decoration: none;
 }
 
 .content .content-bottom .content-user-bottom .user-flair {

@@ -1,6 +1,6 @@
 {
   "name": "How bad is your code?",
-  "description": "Track the number of Stack Overflow visits",
+  "description": "A visual representation of how dependent you are on Stack Overflow.",
   "version": "1.0.0",
   "manifest_version": 3,
   "action": {
