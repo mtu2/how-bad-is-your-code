@@ -33,7 +33,7 @@ async function buildDom() {
   buildBookmarkListDom(bookmarks);
 
   // Build user profile DOM
-  if (settings.accountId)
+  if (settings.accountId && settings.accountInfo)
     buildUserDom(settings.accountId, settings.accountInfo);
 
   // Build info icon/missing history

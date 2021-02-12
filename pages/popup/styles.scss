@@ -27,6 +27,10 @@ select {
   font-family: inherit;
   font-size: inherit;
 }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 /* Variables */
 $font-color-dark: #242729;
@@ -127,10 +131,6 @@ code {
       margin-bottom: 6px;
     }
     .content-description {
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
       code:hover {
         cursor: pointer;
       }
@@ -316,12 +316,16 @@ code {
   }
 
   .missing-history {
+    text-decoration: underline;
     &:hover {
       cursor: pointer;
     }
   }
   .missing-history-explanation {
     display: none;
+    a {
+      text-decoration: underline;
+    }
   }
 }
 .grid-loading-container {

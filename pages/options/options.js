@@ -53,9 +53,15 @@ function displayStatus(message) {
 }
 
 async function getAccountInfo(id) {
-  const res = await fetch(
-    `https://api.stackexchange.com/2.2/users/${id}?order=desc&sort=reputation&site=stackoverflow`
-  );
-  const data = await res.json();
-  return data.items[0];
+  // Get Stack Overflow account info from id
+  try {
+    const res = await fetch(
+      `https://api.stackexchange.com/2.2/users/${id}?order=desc&sort=reputation&site=stackoverflow`
+    );
+    const data = await res.json();
+    return data.items[0];
+  } catch (err) {
+    console.error(`Stack Overflow user id ${id} is not valid.`);
+    return null;
+  }
 }

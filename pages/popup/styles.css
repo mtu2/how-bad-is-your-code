@@ -32,6 +32,11 @@ select {
   font-size: inherit;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* Variables */
 :root {
   --week-width: calc(10px + 3px);
@@ -109,11 +114,6 @@ code {
 /* Content */
 .content .content-top p {
   margin-bottom: 6px;
-}
-
-.content .content-top .content-description a {
-  color: inherit;
-  text-decoration: none;
 }
 
 .content .content-top .content-description code:hover {
@@ -333,12 +333,20 @@ code {
   height: 16px;
 }
 
+.grid-info .missing-history {
+  text-decoration: underline;
+}
+
 .grid-info .missing-history:hover {
   cursor: pointer;
 }
 
 .grid-info .missing-history-explanation {
   display: none;
+}
+
+.grid-info .missing-history-explanation a {
+  text-decoration: underline;
 }
 
 .grid-loading-container {
