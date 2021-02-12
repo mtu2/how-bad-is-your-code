@@ -138,6 +138,7 @@ function buildBookmarkListDom(bookmarkList) {
 /* USER DOM FUNCTIONS */
 function buildUserDom(accountId, accountInfo) {
   const contentUserBottom = $("#content-user-bottom");
+  contentUserBottom.addClass("content-user-bottom");
 
   contentUserBottom
     .append(
