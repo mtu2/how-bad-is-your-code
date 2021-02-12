@@ -14,7 +14,7 @@ body {
   background-color: #ffffff;
   min-height: 180px;
   width: auto;
-  min-width: 539px;
+  min-width: 539.2px; // min = 8 months
   padding: 16px;
 }
 html::-webkit-scrollbar {
@@ -44,6 +44,12 @@ $bg-color-gray: #e4e6e8;
 
 $square-size: 10px;
 $square-gap: 3px;
+
+$square-color-data-0: #ebedf0;
+$square-color-data-1: rgb(155, 233, 168);
+$square-color-data-2: rgb(64, 196, 99);
+$square-color-data-3: rgb(48, 161, 78);
+$square-color-data-4: rgb(33, 110, 57);
 
 :root {
   // For use inside popup.js
@@ -236,6 +242,7 @@ code {
 
 /* Grid */
 .grid {
+  position: relative;
   display: inline-grid;
   grid-template-areas: "empty months" "days squares";
   grid-template-columns: auto 1fr;
@@ -244,6 +251,9 @@ code {
   font-size: 10px;
   padding: 12px;
   border: 1px #e1e4e8 solid;
+
+  width: 100%; // hardcoded grid width
+  height: 133.33px; // hardcoded grid height
 
   ul li {
     list-style: none;
@@ -275,22 +285,88 @@ code {
     grid-auto-columns: $square-size;
 
     li {
-      background-color: #ebedf0;
+      background-color: $square-color-data-0;
       border-radius: 2px;
 
       &[data-level="1"] {
-        background-color: rgb(155, 233, 168);
+        background-color: $square-color-data-1;
       }
       &[data-level="2"] {
-        background-color: rgb(64, 196, 99);
+        background-color: $square-color-data-2;
       }
       &[data-level="3"] {
-        background-color: rgb(48, 161, 78);
+        background-color: $square-color-data-3;
       }
       &[data-level="4"] {
-        background-color: rgb(33, 110, 57);
+        background-color: $square-color-data-4;
       }
     }
+  }
+}
+
+.grid-loading-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 50%;
+}
+.grid-loading,
+.grid-loading:before,
+.grid-loading:after {
+  background: $square-color-data-0;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 2em;
+}
+.grid-loading {
+  color: $square-color-data-0;
+  text-indent: -9999em;
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+
+  &:before,
+  &:after {
+    position: absolute;
+    top: 0;
+    content: "";
+  }
+  &:before {
+    left: -1.5em;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+  }
+  &:after {
+    left: 1.5em;
+  }
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 2em;
+  }
+  40% {
+    box-shadow: 0 -1em;
+    height: 3em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 2em;
+  }
+  40% {
+    box-shadow: 0 -1em;
+    height: 3em;
   }
 }
 

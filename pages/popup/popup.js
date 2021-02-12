@@ -2,6 +2,7 @@ $(document).ready(() => buildDom());
 
 const NUMBER_MONTHS_SHOWN = 8;
 const NUMBER_DAYS_SHOWN = calcNumberDaysToShow(NUMBER_MONTHS_SHOWN);
+const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS_SHORT = [
   "Jan",
   "Feb",
@@ -50,6 +51,8 @@ async function buildDom() {
   const urlTimeSummary = processVisitTimes(urlVisitTimes);
   buildGridSquaresDom(urlTimeSummary);
   buildGridMonthDom();
+  buildGridDayDom();
+  $("#grid-loading-container").remove();
 }
 
 /* SETTINGS FUNCTIONS */
@@ -297,6 +300,14 @@ function buildGridMonthDom() {
   }
 
   months.css("grid-template-columns", styling);
+}
+
+function buildGridDayDom() {
+  const days = $("#days");
+
+  DAYS_SHORT.forEach((day) => {
+    days.append(`<li>${day}</li>`);
+  });
 }
 
 function setFirstActive(firstTime) {
