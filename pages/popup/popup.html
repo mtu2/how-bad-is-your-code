@@ -50,10 +50,25 @@
   <!-- Grid -->
   <div class="grid">
     <div class="grid-loading-container" id="grid-loading-container">
-      <div class="grid-loading">loading...</div>
+      <div class="grid-loading"></div>
+    </div>
+    <div class="grid-info">
+      <div class="tooltip">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" class="info-icon">
+          <path d="M0 0h24v24H0V0z" fill="none" />
+          <path
+            d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
+        </svg>
+        <span class="tooltip-text-left">
+          <u class="missing-history" id="missing-history">History not accurate?</u>
+          <span class="missing-history-explanation" id="missing-history-explanation">
+            Unfortunately, the extension can only access the local history of your device, and not history synced
+            across other signed in devices.</span>
+        </span>
+      </div>
     </div>
 
-    <ul class="months" id="months"></ul>
+    <ul class=" months" id="months"></ul>
     <ul class="days" id="days">
     </ul>
     <ul class="squares" id="squares"></ul>

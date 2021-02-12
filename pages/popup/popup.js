@@ -36,6 +36,9 @@ async function buildDom() {
   if (settings.accountId)
     buildUserDom(settings.accountId, settings.accountInfo);
 
+  // Build info icon/missing history
+  buildInfoIcon();
+
   // Get and build visit time related DOM
   const {
     lastActive,
@@ -177,6 +180,18 @@ function buildUserDom(accountId, accountInfo) {
   );
 }
 
+/* INFO ICON/MISSING HISTORY FUNCTIONS */
+function buildInfoIcon() {
+  const missingHistory = $("#missing-history");
+  const missingHistoryExplanation = $("#missing-history-explanation");
+
+  missingHistory.click(() => {
+    missingHistoryExplanation.css("display") === "none"
+      ? missingHistoryExplanation.css("display", "block")
+      : missingHistoryExplanation.css("display", "none");
+  });
+}
+
 /* VISIT TIME FUNCTIONS */
 // Search history to find number of vists to specified url and other data
 function getVisitTimeData(urls) {
@@ -282,7 +297,7 @@ function buildGridSquaresDom(urlTimeSummary) {
       `<li class="tooltip" data-level="${calcSquareLevel(
         squaresTotal[i],
         percentiles
-      )}"><span class="tooltip-text">${finishedText}</span></li>`
+      )}"><span class="tooltip-text-top">${finishedText}</span></li>`
     );
   }
 }

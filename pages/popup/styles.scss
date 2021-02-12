@@ -304,6 +304,26 @@ code {
   }
 }
 
+.grid-info {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  .info-icon {
+    fill: $font-color-light;
+    width: 16px;
+    height: 16px;
+  }
+
+  .missing-history {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .missing-history-explanation {
+    display: none;
+  }
+}
 .grid-loading-container {
   position: absolute;
   top: 50%;
@@ -375,21 +395,24 @@ code {
   position: relative;
   display: inline-block;
 
-  .tooltip-text {
+  .tooltip-text-top,
+  .tooltip-text-left {
     position: absolute;
     z-index: 1;
 
     min-width: 120px;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -60px; /* half width to center the tooltip */
 
     visibility: hidden;
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     text-align: center;
-    padding: 5px 0;
+    padding: 4px;
     border-radius: 6px;
+  }
+  .tooltip-text-top {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px; /* half width to center the tooltip */
 
     &::after {
       content: " ";
@@ -402,8 +425,24 @@ code {
       border-color: rgba(0, 0, 0, 0.5) transparent transparent transparent;
     }
   }
+  .tooltip-text-left {
+    top: -5px;
+    right: 125%;
 
-  &:hover .tooltip-text {
+    &::after {
+      content: " ";
+      position: absolute;
+      top: 10px; // should be 50%, but hardcoded so does not move when expanding missing history explanation
+      left: 100%; /* To the right of the tooltip */
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  &:hover .tooltip-text-left,
+  &:hover .tooltip-text-top {
     visibility: visible;
   }
 }
