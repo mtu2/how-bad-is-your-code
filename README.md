@@ -1,5 +1,8 @@
 <!-- ABOUT THE PROJECT -->
-# How bad is your code?
+<h1>
+  <img src="images/stack-overflow.png" alt="Stack Overflow" width=28> How
+  bad is your code?
+</h1>
 
 A chrome extension that visualises all your visits and bookmarks to stackoverflow.com. Add additional websites to keep track of as well as your Stack Overflow user id to see more of your usage stats. This extension uses the Chrome and Stack Exchange API to sort, categorise and represent user's browsing history and saved bookmarks.
 
@@ -9,6 +12,7 @@ A chrome extension that visualises all your visits and bookmarks to stackoverflo
 [![How bad is your code? Screen Shot][product-screenshot]](https://chrome.google.com/webstore/detail/how-bad-is-your-code/imhffphhfhhmdohjflcnahlnjcoogafk?hl=en/)
 
 <!-- FEATURES -->
+
 ## ✨ Features
 
 - Designed to replicate the Stack Overflow question and answer layout
@@ -19,13 +23,15 @@ A chrome extension that visualises all your visits and bookmarks to stackoverflo
 _🐛 Synced history bug: unfortunately, due to one of Chrome's [long-standing bugs](https://bugs.chromium.org/p/chromium/issues/detail?id=474511), the extension can only access the local history of your device, and not history synced across other signed in devices._
 
 <!-- ROADMAP -->
+
 ## 🚧 Roadmap
 
-- [ ] Implement contribution graph settings (number of months shown) 
-- [X] Upload new images to the Chrome Web Store
-- [X] Solve local history device bug
+- [ ] Implement contribution graph settings (number of months shown)
+- [x] Upload new images to the Chrome Web Store
+- [x] Solve local history device bug
 
 <!-- CONTACT -->
+
 ## 💬 Contact
 
 Portfolio: [mttu.dev](https://mttu.dev)
