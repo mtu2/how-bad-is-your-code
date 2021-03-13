@@ -9,7 +9,7 @@ A chrome extension that visualises all your visits and bookmarks to stackoverflo
 🔗 Link: [Chrome Web Store](https://chrome.google.com/webstore/detail/how-bad-is-your-code/imhffphhfhhmdohjflcnahlnjcoogafk?hl=en/)\
 🛠 Built with: `jQuery, Chrome API, Stack Exchange API, SASS`
 
-[![How bad is your code? Screen Shot][product-screenshot]](https://chrome.google.com/webstore/detail/how-bad-is-your-code/imhffphhfhhmdohjflcnahlnjcoogafk?hl=en/)
+[![How bad is your code? Screen Shot](./readme-screenshot.png)](https://chrome.google.com/webstore/detail/how-bad-is-your-code/imhffphhfhhmdohjflcnahlnjcoogafk?hl=en/)
 
 <!-- FEATURES -->
 
